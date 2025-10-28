@@ -1,0 +1,47 @@
+<div class="contenedor-total">
+    <h2>Verificación de Equipos de Tercero</h2>
+
+    <div class="contenedor">
+        <form [formGroup]="form">
+            <ng-container *ngFor="let seccion of secciones">
+                <mat-card class="card" [formGroupName]="seccion.key">
+                    <mat-card-title>{{ seccion.label }}</mat-card-title>
+
+                    <div class="fila">
+                        <!-- Campos de equipos verificados -->
+                        <mat-form-field appearance="outline" class="campo" *ngIf="seccion.key !== 'liberacion'">
+                            <mat-label>Equipos Verificados</mat-label>
+                            <input matInput type="number" formControlName="equiposVerificados" />
+                        </mat-form-field>
+
+                        <!-- Campo especial de liberación -->
+                        <mat-form-field appearance="outline" class="campo" *ngIf="seccion.key === 'liberacion'">
+                            <mat-label>Equipos Liberados</mat-label>
+                            <input matInput type="number" formControlName="equiposLiberados" />
+                        </mat-form-field>
+
+                        <!-- Horarios -->
+                        <mat-form-field appearance="outline" class="campo">
+                            <mat-label>Hora Inicio</mat-label>
+                            <input matInput type="time" formControlName="horaInicio" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="campo">
+                            <mat-label>Hora Fin</mat-label>
+                            <input matInput type="time" formControlName="horaFin" />
+                        </mat-form-field>
+
+                        <!-- Campos de apoyo -->
+                        <ng-container *ngIf="mostrarCamposApoyo">
+                            <mat-form-field appearance="outline" class="campo"
+                                *ngIf="form.get(seccion.key)?.get('equiposApoyo')">
+                                <mat-label>Equipos realizados por apoyo ({{ seccion.label }})</mat-label>
+                                <input matInput type="number" formControlName="equiposApoyo" />
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                </mat-card>
+            </ng-container>
+        </form>
+    </div>
+</div>

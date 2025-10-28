@@ -1,0 +1,46 @@
+.contenedor-total{
+  padding: 10px;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+}
+
+.card {
+  padding: 16px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.fila2 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+  gap: 16px;
+}
+
+.campo {
+  flex: 1;
+  min-width: 220px;
+}
+
+.boton-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

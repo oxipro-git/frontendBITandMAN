@@ -1,0 +1,106 @@
+<div class="contenedor-total">
+  <h2>Bitácora Oxipro</h2>
+
+  <form [formGroup]="formGeneral" (wheel)="prevenirScrollEnNumber($event)">
+    <!-- Información general -->
+    <mat-card class="card">
+      <mat-card-title>Información General</mat-card-title>
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Fecha</mat-label>
+          <input matInput formControlName="fecha" readonly />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Técnico</mat-label>
+          <input type="text" matInput formControlName="tecnico" [matAutocomplete]="auto" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let t of tecnicos" [value]="t">
+              {{ t }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Cantidad de Equipos</mat-label>
+          <input matInput type="number" formControlName="cantidadEquipos" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label># Remisión Equipos de Entrada</mat-label>
+          <input matInput formControlName="numeroRemisionEquipos" />
+        </mat-form-field>
+      </div>
+      <!-- ✅ Nuevo checkbox de ayuda -->
+      <mat-card class="card">
+        <mat-checkbox formControlName="ayudaOtroTecnico">
+          ¿Ayuda de otro técnico u operador?
+        </mat-checkbox>
+
+        <mat-form-field appearance="fill" style="margin-left: 10px;" *ngIf="formGeneral.get('ayudaOtroTecnico')?.value">
+          <mat-label>Nombre del otro técnico</mat-label>
+          <input matInput formControlName="nombreOtroTecnico" placeholder="Ingrese nombre">
+        </mat-form-field>
+      </mat-card>
+    </mat-card>
+
+    <!-- Checkbox de tipo de proceso -->
+    <mat-card class="card">
+      <mat-card-title>Tipo de Actividad</mat-card-title>
+
+      <mat-checkbox formControlName="mostrarMantenimiento">
+        Mantenimiento Rotación
+      </mat-checkbox>
+      <div *ngIf="formGeneral.get('mostrarMantenimiento')?.value">
+        <app-formulario [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-formulario>
+
+      </div>
+
+      <mat-checkbox formControlName="mostrarAlistamiento">
+        Alistamiento Equipos
+      </mat-checkbox>
+      <div *ngIf="formGeneral.get('mostrarAlistamiento')?.value">
+        <app-alistamiento [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-alistamiento>
+      </div>
+
+      <mat-checkbox formControlName="mostrarTercero">
+        Verificación Equipos Tercero
+      </mat-checkbox>
+      <div *ngIf="formGeneral.get('mostrarTercero')?.value">
+        <app-tercero [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-tercero>
+      </div>
+    </mat-card>
+
+    <!-- ✅ Repuestos (se mueve aquí) -->
+    <mat-card class="card">
+      <div class="fila">
+        <mat-checkbox formControlName="liberaRepuestos">
+          ¿Liberó repuestos?
+        </mat-checkbox>
+        <div *ngIf="formGeneral.get('liberaRepuestos')?.value">
+          <mat-form-field appearance="outline">
+            <mat-label># Remisión de repuestos</mat-label>
+            <input matInput type="number" formControlName="numeroRemisionRepuestos" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label># Remisión Equipos de Salida</mat-label>
+          <input matInput formControlName="numeroRemisionEquiposSalida" />
+        </mat-form-field>
+      </div>
+
+    </mat-card>
+
+    <!-- Botón de guardar general -->
+    <div class="boton-container">
+      <button mat-raised-button color="primary" (click)="guardar()">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,83 @@
+<div class="contenedor-total">
+    <h2>Alistamiento de Equipos</h2>
+
+    <div class="contenedor">
+        <form [formGroup]="form">
+
+
+
+            <!-- ✅ Checkboxes adicionales -->
+            <mat-card class="card">
+                <mat-card-title>Verificaciones Adicionales</mat-card-title>
+
+                <div class="fila">
+                    <mat-checkbox formControlName="alarmaCero">
+                        ¿Alarma en 0?
+                    </mat-checkbox>
+                </div>
+
+                <div class="fila">
+                    <mat-checkbox formControlName="flujoMaximo">
+                        ¿Alarma Flujo máximo?
+                    </mat-checkbox>
+                </div>
+                <div class="fila">
+                    <mat-checkbox formControlName="desconexion">
+                        ¿Alarma desconexión?
+                    </mat-checkbox>
+                </div>
+            </mat-card>
+
+            <!-- ✅ Secciones normales (como antes) -->
+            <ng-container *ngFor="let seccion of secciones">
+                <mat-card class="card" [formGroupName]="seccion.key">
+                    <mat-card-title>{{ seccion.label }}</mat-card-title>
+
+                    <div class="fila">
+                        <mat-form-field appearance="outline" class="campo">
+                            <mat-label>Equipos Verificados</mat-label>
+                            <input matInput type="number" formControlName="equiposVerificados" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="campo">
+                            <mat-label>Hora Inicio</mat-label>
+                            <input matInput type="time" formControlName="horaInicio" />
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="campo">
+                            <mat-label>Hora Fin</mat-label>
+                            <input matInput type="time" formControlName="horaFin" />
+                        </mat-form-field>
+
+                        <!-- Campos de apoyo -->
+                        <ng-container *ngIf="mostrarCamposApoyo">
+                            <mat-form-field appearance="outline" class="campo"
+                                *ngIf="form.get(seccion.key)?.get('equiposApoyo')">
+                                <mat-label>Equipos realizados por apoyo ({{ seccion.label }})</mat-label>
+                                <input matInput type="number" formControlName="equiposApoyo" />
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                </mat-card>
+            </ng-container>
+
+            <!-- ✅ Checkbox Marca de Calor -->
+            <mat-card class="card">
+                <mat-card-title>Marca de Calor</mat-card-title>
+                <div class="fila">
+                    <mat-checkbox formControlName="marcaCalor">
+                        ¿Aplica marca de calor?
+                    </mat-checkbox>
+                </div>
+
+                <!-- Campo cantidad solo si marcaCalor = true -->
+                <div class="fila" *ngIf="form.get('marcaCalor')?.value">
+                    <mat-form-field appearance="outline" class="campo">
+                        <mat-label>Cantidad de equipos con marca de calor</mat-label>
+                        <input matInput type="number" formControlName="cantidadMarcaCalor" />
+                    </mat-form-field>
+                </div>
+            </mat-card>
+        </form>
+    </div>
+</div>
