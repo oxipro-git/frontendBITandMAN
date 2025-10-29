@@ -2,7 +2,6 @@
   <h2>Bitácora Oxipro</h2>
 
   <form [formGroup]="formGeneral" (wheel)="prevenirScrollEnNumber($event)">
-    <!-- Información general -->
     <mat-card class="card">
       <mat-card-title>Información General</mat-card-title>
 
@@ -34,10 +33,9 @@
           <input matInput formControlName="numeroRemisionEquipos" />
         </mat-form-field>
       </div>
-      <!-- ✅ Nuevo checkbox de ayuda -->
       <mat-card class="card">
         <mat-checkbox formControlName="ayudaOtroTecnico">
-          ¿Ayuda de otro técnico u operador?
+          ¿Recibio ayuda de otro técnico u operador?
         </mat-checkbox>
 
         <mat-form-field appearance="fill" style="margin-left: 10px;" *ngIf="formGeneral.get('ayudaOtroTecnico')?.value">
@@ -47,34 +45,40 @@
       </mat-card>
     </mat-card>
 
-    <!-- Checkbox de tipo de proceso -->
     <mat-card class="card">
       <mat-card-title>Tipo de Actividad</mat-card-title>
 
       <mat-checkbox formControlName="mostrarMantenimiento">
-        Mantenimiento Rotación
+        Mantenimiento equipos de rotación
       </mat-checkbox>
       <div *ngIf="formGeneral.get('mostrarMantenimiento')?.value">
-        <app-formulario [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-formulario>
-
+        <app-formulario
+            [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"
+            [cantidadEquiposControl]="formGeneral.get('cantidadEquipos')">
+        </app-formulario>
       </div>
 
       <mat-checkbox formControlName="mostrarAlistamiento">
-        Alistamiento Equipos
+        Mantenimiento equipos Alistamiento
       </mat-checkbox>
       <div *ngIf="formGeneral.get('mostrarAlistamiento')?.value">
-        <app-alistamiento [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-alistamiento>
+        <app-alistamiento
+            [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"
+            [cantidadEquiposControl]="formGeneral.get('cantidadEquipos')">
+        </app-alistamiento>
       </div>
 
       <mat-checkbox formControlName="mostrarTercero">
-        Verificación Equipos Tercero
+        Verificación para ingreso equipos de Tercero
       </mat-checkbox>
       <div *ngIf="formGeneral.get('mostrarTercero')?.value">
-        <app-tercero [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"></app-tercero>
+        <app-tercero
+            [mostrarCamposApoyo]="formGeneral.get('ayudaOtroTecnico')?.value"
+            [cantidadEquiposControl]="formGeneral.get('cantidadEquipos')">
+        </app-tercero>
       </div>
     </mat-card>
 
-    <!-- ✅ Repuestos (se mueve aquí) -->
     <mat-card class="card">
       <div class="fila">
         <mat-checkbox formControlName="liberaRepuestos">
@@ -96,7 +100,6 @@
 
     </mat-card>
 
-    <!-- Botón de guardar general -->
     <div class="boton-container">
       <button mat-raised-button color="primary" (click)="guardar()">
         Guardar
